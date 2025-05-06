@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-// Write any include statements here
-
-//binary search for upperbound of xCoords, get compressed
 
 struct FenwickTree{
    vector<int> bit;
@@ -30,6 +27,8 @@ struct FenwickTree{
     }
 };
 
+
+//In-place sort and merge overlapping intervals algorithm
 void mergeRanges(vector<pair<long long, long long>>& ranges){
   //ranges sorted
   sort(ranges.begin(), ranges.end());
@@ -47,9 +46,10 @@ void mergeRanges(vector<pair<long long, long long>>& ranges){
 
 long long getPlusSignCount(int N, vector<int> L, string D) {
   long long x = 0, y = 0; //start position  
-  //Find lines O(n)
-  unordered_map<long long, vector<pair<long long, long long>>> V, H;
   
+  //Find lines O(n)
+  unordered_map<long long, vector<pair<long long, long long>>> V, H; //Vertical and Horizontal lines
+
   for(int i = 0; i < N; i++){
     int len = L[i];
     switch(D[i]){
@@ -76,7 +76,7 @@ long long getPlusSignCount(int N, vector<int> L, string D) {
   vector<long long> xCoords;
   xCoords.reserve(V.size());
 
-  vector<pair<long long, pair<long long, char>> > updates;  // {y, {x, delta}}
+  vector<pair<long long, pair<long long, char>> > updates;  // {y, {x, delta}} | y, y-value to apply this update
 
   for (auto& [x, ranges] : V) {
     xCoords.push_back(x);
@@ -86,17 +86,16 @@ long long getPlusSignCount(int N, vector<int> L, string D) {
       updates.push_back({range.second, {x, -1}});
     }
   }
-  sort(xCoords.begin(), xCoords.end());
   sort(updates.begin(), updates.end());
 
-  //Compression Map
+  //X Value compression
+  sort(xCoords.begin(), xCoords.end());
   unordered_map<long long, int> compX(xCoords.size());
-
   for(int i = 0; i < xCoords.size(); i++){
     compX[xCoords[i]] = i;
   }
 
-  //cout <<"create Fenwick Tree" <<endl;
+  //Initialize Fenwick Tree
   FenwickTree lines(xCoords.size());
 
   //Find coordinates for range queries
@@ -112,36 +111,24 @@ long long getPlusSignCount(int N, vector<int> L, string D) {
 
   long long count = 0;
 
-  //merge two indices
+  //Line Sweep
   for(int i = 0, j = 0; i < N || j < M;){
-    if(i < N && (j== M || updates[i].first <= yCoords[j])){ //Update
-      /*
-      cout <<"=== y: " << updates[i].first <<" Update ===" <<endl;
-      cout << " x: " << updates[i].second.first<< " delta: " << (int)updates[i].second.second<<endl;
-      */
+    if(i < N && (j== M || updates[i].first <= yCoords[j])){
+      //Update
       lines.update(compX[updates[i].second.first], updates[i].second.second);
       i++;
-    }else{ //Range Queries
+    }else{ 
+      //Range Query
       for(const auto& [l, r]: H[yCoords[j]]){
-          /*
-          cout <<"=== y: " << yCoords[j] <<" Query ===" <<endl;
-          cout << "  Range: ( " << l << ", "<< r <<")" <<endl; 
-          */
           auto itL = upper_bound(xCoords.begin(), xCoords.end(), l);
+          if(itL == xCoords.end()) continue; //Out of Bounds
           int li = int(itL - xCoords.begin());
 
-          // Find the first element >= r:
           auto itR = std::lower_bound(xCoords.begin(), xCoords.end(), r);
-
-          // If that’s the very first element, there is no xCoords[i] < r:
-          if (itR == xCoords.begin()) {
-            // empty range
-            continue;
-          }
-          // Otherwise back up one to get the last element < r:
+          if (itR == xCoords.begin()) continue; //Out of Bounds
           int ri = int(itR - xCoords.begin())-1;
+
           int crossCount = lines.rangeSum(li, ri);
-          //cout << "Cross Count: " <<crossCount <<endl;
           count += crossCount;
       }
       j++;
