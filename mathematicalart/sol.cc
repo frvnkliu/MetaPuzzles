@@ -46,15 +46,10 @@ void mergeRanges(vector<pair<long long, long long>>& ranges){
 
 
 long long getPlusSignCount(int N, vector<int> L, string D) {
-  // Write your code here
-  
-  long long x = 0, y = 0; //start position
-  
+  long long x = 0, y = 0; //start position  
   //Find lines O(n)
-
-  //cout <<"create lines lists" <<endl;
   unordered_map<long long, vector<pair<long long, long long>>> V, H;
-  //cout <<"(x: " << 0<< ", y: " << 0 <<")" <<endl;  
+  
   for(int i = 0; i < N; i++){
     int len = L[i];
     switch(D[i]){
@@ -75,13 +70,8 @@ long long getPlusSignCount(int N, vector<int> L, string D) {
         x-= len;
         break;
     }
-    //cout <<"(x: " << x<< ", y: " << y <<")" <<endl;  
-
   }
 
-
-
-  
   //Line Sweep
   vector<long long> xCoords;
   xCoords.reserve(V.size());
@@ -121,28 +111,6 @@ long long getPlusSignCount(int N, vector<int> L, string D) {
   int N = updates.size(), M = yCoords.size();
 
   long long count = 0;
-
-  /*
-  
-  cout << "=== Vertical Lines===" <<endl;
-  for(auto x: xCoords){
-    cout << " x: " << x <<" ranges: [ ";
-    for(auto& [l, r]: V[x]){
-      cout << "("<<l <<", " << r <<") ";
-    }
-    cout <<"]"<<endl;
-  }
-
-  cout << "=== Horizontal Lines===" <<endl;
-  for(auto y: yCoords){
-    cout << " y: " << y << " ranges: [ ";
-    for(auto& [l, r]: H[y]){
-      cout << "("<<l <<", " << r <<") ";
-    }
-    cout<<"]" <<endl;
-  }
-  */
-  
 
   //merge two indices
   for(int i = 0, j = 0; i < N || j < M;){
