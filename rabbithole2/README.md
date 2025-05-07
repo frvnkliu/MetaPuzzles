@@ -1,6 +1,6 @@
 # Rabbit Hole (Chapter 2)
 
-Modified Tarjan's Algorithm solution to Meta Careers Page Coding Puzzle (22/22 Cases).
+Modified [Tarjan's Algorithm](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm) solution to Meta Careers Page Coding Puzzle (22/22 Cases).
 [Puzzle Link](https://www.metacareers.com/profile/coding_puzzles?puzzle=254501763097320)
 
 ## Problem Description
