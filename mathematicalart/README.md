@@ -6,10 +6,6 @@ Line sweep and Fenwick Tree solution to Meta Careers Page Coding Puzzle (33/33 C
 
 You are creating a special painting on a canvas represented as a 2D Cartesian plane. You start with your brush at the origin (0,0) and make $N$ axis-aligned strokes without lifting the brush. For the $i$th stroke, you move your brush $L_i$ units from its current position in direction $D_i$, where $D_i \in \{\text{U, D, L, R}\}$. Each stroke leaves a line segment of paint between the starting and ending point. A “plus sign” is considered present at a point $P$ if and only if there is a painted line extending from $P$ in **all four** cardinal directions (up, down, left, and right).
 
-
-Thought for 6 seconds
-
-
 # Mathematical Art (Level 4)
 
 Solution to count the number of “plus signs” formed by axis‑aligned brush strokes on a 2D Cartesian plane.
