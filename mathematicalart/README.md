@@ -1,6 +1,7 @@
-# Mathematical Art (Level 4)
+# Mathematical Art
 
 Line sweep and Fenwick Tree solution to Meta Careers Page Coding Puzzle (33/33 Cases).
+[Puzzle Link](https://www.metacareers.com/profile/coding_puzzles?puzzle=587690079288608)
 
 ## Problem Description
 
